@@ -39,15 +39,7 @@ app.use(express.json());
 // Middleware pour analyser les cookies
 app.use(cookieParser());
 
-// Middleware pour gérer les sessions
-app.use(session({
-    secret: 'be8e4641a7463b16610f04f8646ea8197f9c0972b47a60cc52939526231e27e1', // Clé secrète pour signer les cookies de session
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: false
-    } // Remplacer par true si HTTPS est activé
-}));
+
 
 // Définir le port d'écoute du serveur
 const PORT = process.env.PORT || 3000;

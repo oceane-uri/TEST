@@ -9,53 +9,53 @@ const session = require('express-session');
 // const mongoose = require('mongoose');
 
 // Configuration du middleware de gestion des sessions
-app.use(session({
-    secret: 'be8e4641a7463b16610f04f8646ea8197f9c0972b47a60cc52939526231e27e1', // Clé secrète utilisée pour signer les cookies de session
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: false
-    } // Configurer la sécurisation du cookie si HTTPS est utilisé
-}));
+// app.use(session({
+//     secret: 'be8e4641a7463b16610f04f8646ea8197f9c0972b47a60cc52939526231e27e1', // Clé secrète utilisée pour signer les cookies de session
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//         secure: false
+//     } // Configurer la sécurisation du cookie si HTTPS est utilisé
+// }));
 
-// Middleware pour protéger les routes nécessitant une authentification
-function isAuthenticated(req, res, next) {
-    if (req.session && req.session.userId) {
-        // L'utilisateur est authentifié, passer à l'étape suivante
-        return next();
-    } else {
-        // L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
-        return res.redirect('/login');
-    }
-}
-// Route pour récupérer les informations de l'utilisateur connecté
-router.get('/profile', isAuthenticated, async (req, res) => {
-    try {
-        // Récupérer les informations de l'utilisateur à partir de req.user
-        const user = req.user;
+// // Middleware pour protéger les routes nécessitant une authentification
+// function isAuthenticated(req, res, next) {
+//     if (req.session && req.session.userId) {
+//         // L'utilisateur est authentifié, passer à l'étape suivante
+//         return next();
+//     } else {
+//         // L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
+//         return res.redirect('/login');
+//     }
+// }
+// // Route pour récupérer les informations de l'utilisateur connecté
+// router.get('/profile', isAuthenticated, async (req, res) => {
+//     try {
+//         // Récupérer les informations de l'utilisateur à partir de req.user
+//         const user = req.user;
 
-        // Récupérer les réservations de l'utilisateur
-        const reservations = await Reservation.find({
-            userId: user._id
-        });
+//         // Récupérer les réservations de l'utilisateur
+//         const reservations = await Reservation.find({
+//             userId: user._id
+//         });
 
-        // Retourner les informations de l'utilisateur et ses réservations
-        res.json({
-            user: {
-                id: user._id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                // Ajoutez d'autres champs d'informations de l'utilisateur que vous souhaitez inclure
-            },
-            reservations
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        });
-    }
-});
+//         // Retourner les informations de l'utilisateur et ses réservations
+//         res.json({
+//             user: {
+//                 id: user._id,
+//                 firstName: user.firstName,
+//                 lastName: user.lastName,
+//                 email: user.email,
+//                 // Ajoutez d'autres champs d'informations de l'utilisateur que vous souhaitez inclure
+//             },
+//             reservations
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             message: error.message
+//         });
+//     }
+// });
 
 // Middleware pour récupérer un utilisateur par ID
 async function getUser(req, res, next) {
@@ -174,54 +174,6 @@ router.get('/:email', getUsermail, (req, res) => {
     res.json(res.user);
 });
 
-// Route pour supprimer un utilisateur
-// router.delete('/:id', getUser, async (req, res) => {
-//     try {
-//         await res.user.remove();
-//         res.json({
-//             message: 'Utilisateur supprimé'
-//         });
-//     } catch (error) {
-//         res.status(500).json({
-//             message: error.message
-//         });
-//     }
-// });
-
-// async function getUser(req, res, next) {
-//     try {
-//         const user = await User.findById(req.params.id);
-//         if (user == null) {
-//             return res.status(404).json({
-//                 message: 'Utilisateur introuvable'
-//             });
-//         }
-//         res.user = user;
-//         next();
-//     } catch (error) {
-//         return res.status(500).json({
-//             message: error.message
-//         });
-//     }
-// }
-
-// Route pour la connexion des utilisateurs
-// router.post('/login', async (req, res) => {
-//     const {
-//         email,
-//         password
-//     } = req.body;
-
-//     try {
-//         const user = await User.findOne({
-//             email
-//         });
-
-//         if (!user) {
-//             return res.status(401).json({
-//                 message: "Adresse e-mail incorrecte"
-//             });
-//         }
 
 //         // Vérifiez si le mot de passe est correct
 //         const isPasswordValid = await user.comparePassword(password);
@@ -370,28 +322,28 @@ router.post('/register', async (req, res) => {
 
 
 
-router.delete('/:userId', async (req, res) => {
-    const userId = req.params.userId;
+// router.delete('/:userId', async (req, res) => {
+//     const userId = req.params.userId;
 
-    try {
-        // Supprimer l'utilisateur de la base de données
-        const deletedUser = await User.findByIdAndDelete(userId);
+//     try {
+//         // Supprimer l'utilisateur de la base de données
+//         const deletedUser = await User.findByIdAndDelete(userId);
 
-        if (!deletedUser) {
-            return res.status(404).json({
-                message: 'Utilisateur non trouvé'
-            });
-        }
+//         if (!deletedUser) {
+//             return res.status(404).json({
+//                 message: 'Utilisateur non trouvé'
+//             });
+//         }
 
-        res.status(200).json({
-            message: 'Utilisateur supprimé avec succès'
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: 'Une erreur est survenue lors de la suppression de l\'utilisateur'
-        });
-    }
-});
+//         res.status(200).json({
+//             message: 'Utilisateur supprimé avec succès'
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({
+//             message: 'Une erreur est survenue lors de la suppression de l\'utilisateur'
+//         });
+//     }
+// });
 
 module.exports = router;

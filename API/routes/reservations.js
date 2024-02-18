@@ -48,6 +48,22 @@ router.post('/', async (req, res) => {
     }
 });
 
+// routes/reservations.js
+router.get('/user/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const userReservations = await Reservation.find({
+            userId
+        });
+
+        res.json(userReservations);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+});
+
 // Route pour récupérer toutes les réservations
 router.get('/', async (req, res) => {
     try {

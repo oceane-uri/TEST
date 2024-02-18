@@ -4,7 +4,9 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import { useUser } from '../UserProvider';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { GoogleLogin } from 'react-google-login';
@@ -16,6 +18,9 @@ export function SignIn() {
     password: ''
   });
   const [error, setError] = useState('');
+   const { user, setUser } = useUser();
+   const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -29,10 +34,15 @@ export function SignIn() {
       // Envoi des données de connexion au serveur
       const response = await axios.post('http://localhost:3000/api/users/login', loginData);
       console.log(response.data);
+      // Mettre à jour l'état de l'utilisateur avec setUser
       // Si les informations de connexion sont correctes, rediriger vers la page de profil
       if (response.data.success) {
+        setUser(response.data.user);
+        console.log(response.data.user); // Afficher les données de l'utilisateur dans la console
+
+        
         // Redirection vers la page de profil
-        window.location.href = '/profile';
+      navigate('/profile');
       } else {
         // Affichage d'un message d'erreur si les informations de connexion sont incorrectes
         setError('Email ou mot de passe incorrect');
