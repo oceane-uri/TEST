@@ -1,4 +1,3 @@
-// Importer les modules nécessaires
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./config');
@@ -9,7 +8,6 @@ const passport = require('passport');
 const authRoutes = require('./routes/auth');
 const cookieParser = require('cookie-parser');
 
-// Créer une instance de l'application Express
 const app = express();
 const cors = require('cors');
 

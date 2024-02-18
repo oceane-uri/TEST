@@ -6,6 +6,8 @@ import {
   BriefcaseIcon,
   BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
+import { Input, Modal } from '@material-ui/core';
+
 import axios from 'axios';
 import { Footer } from "@/widgets/layout";
 import { useUser } from "../UserProvider"; 
@@ -13,12 +15,40 @@ import { useNavigate } from 'react-router-dom';
 
 
 export function Profile() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+const [updatedServiceType, setUpdatedServiceType] = useState('');
+const [updatedDate, setUpdatedDate] = useState('');
+const [reservationToUpdate, setReservationToUpdate] = useState(null);
+
    const navigate = useNavigate();
   const { user, reservations, isLoading, error } = useUser();
    const handleNewReservationClick = () => {
-    // Redirection vers la page de nouvelle réservation
+    
     navigate('/new-reservation');
       };
+
+      const handleUpdateReservationClick = (id) => {
+  const reservation = reservations.find(reservation => reservation._id === id);
+  setReservationToUpdate(reservation);
+  setUpdatedServiceType(reservation.serviceType);
+  setUpdatedDate(reservation.date);
+  setIsModalOpen(true);
+};
+
+
+       const handleUpdateReservation = async () => {
+    try {
+      await axios.patch(`/api/reservations/${reservationToUpdate._id}`, {
+        serviceType: updatedServiceType,
+        date: updatedDate
+      });
+      // Actualisation des données des réservations après la mise à jour
+    } catch (error) {
+      console.error('Error updating reservation:', error);
+    }
+    setIsModalOpen(false);
+  };
+
 
   return (
     <>
@@ -117,11 +147,11 @@ export function Profile() {
                       Statut: {reservation.status}
                     </Typography>
                     <Button
-                      className="bg-gray-800 hover:bg-gray-600 mt-4"
-                      onClick={() => handleUpdateReservationClick(reservation._id)}
-                    >
-                      Modifier
-                    </Button>
+  className="bg-gray-800 hover:bg-gray-600 mt-4"
+  onClick={() => handleUpdateReservationClick(reservation._id)}
+>
+  Modifier
+</Button>
                   </Card>
                 </div>
               ))}
@@ -136,6 +166,38 @@ export function Profile() {
         <Footer />
       </div>
 
+       <Modal
+        size="lg"
+        active={isModalOpen}
+        toggler={() => setIsModalOpen(false)}
+      >
+        <Card>
+          <Card.Body>
+            <Typography variant="h6">Modifier la réservation</Typography>
+            <Input
+              type="text"
+              value={updatedServiceType}
+              onChange={(e) => setUpdatedServiceType(e.target.value)}
+              placeholder="Nouveau type de service"
+              className="mt-4"
+            />
+            <Input
+              type="date"
+              value={updatedDate}
+              onChange={(e) => setUpdatedDate(e.target.value)}
+              placeholder="Nouvelle date"
+              className="mt-4"
+            />
+            <Button
+              color="blue"
+              className="mt-4"
+              onClick={handleUpdateReservation}
+            >
+              Mettre à jour
+            </Button>
+          </Card.Body>
+        </Card>
+      </Modal>
     </>
   );
 }

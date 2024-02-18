@@ -25,9 +25,9 @@ export function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/users/register', formData);
+      const response = await axios.post('http://localhost:3000/api/users', formData);
       console.log(response.data);
-    // Si l'inscription est réussie, rediriger vers la page de connexion
+    // Si l'inscription est réussie, je redirige vers la page de connexion
       if (response.data.success) {
         window.location.href = '/sign-in';
       }

@@ -31,10 +31,9 @@ const { user } = useUser();
       date: formattedDate
     };
 
-      // Envoyer les données de la réservation au serveur pour la création
+      // Envoie des données de la réservation pour la création
       const response = await axios.post('http://localhost:3000/api/reservations', updatedReservationData);
       
-      // Gérer la réponse du serveur ici
       
     } catch (error) {
       console.error('Erreur lors de la création de la réservation :', error);
@@ -59,7 +58,7 @@ const { user } = useUser();
             </Typography>
             <Input
               name="date"
-              type="datetime-local" // Utiliser le type datetime-local pour sélectionner la date et l'heure
+              type="datetime-local" // Le type datetime-local pour sélectionner la date et l'heure
               size="lg"
               className="!border-t-blue-gray-200 focus:!border-t-gray-900"
               onChange={handleChange}

@@ -54,7 +54,6 @@ const AdminUsersPage = () => {
               <div>
                 <p>Nom: {selectedUser.firstName}</p>
                 <p>Email: {selectedUser.email}</p>
-                {/* Ajoutez d'autres informations de l'utilisateur ici */}
                 <h3 className="mt-4">Réservations de l'utilisateur</h3>
                 <UserReservations userId={selectedUser._id} />
               </div>

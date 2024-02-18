@@ -1,7 +1,7 @@
 // controllers/reservationController.js
 const Reservation = require('../models/reservation');
 
-// Créer une nouvelle réservation de service
+// Création d'une nouvelle réservation de service
 exports.createReservation = async (req, res) => {
     try {
         const {
@@ -10,14 +10,14 @@ exports.createReservation = async (req, res) => {
             date
         } = req.body;
 
-        // Vérifier si les données requises sont fournies
+        // Vérification, si les données requises sont fournies
         if (!userId || !serviceType || !date) {
             return res.status(400).json({
                 message: "Tous les champs sont obligatoires."
             });
         }
 
-        // Créer une nouvelle réservation
+        // la nouvelle réservation
         const newReservation = new Reservation({
             userId,
             serviceType,

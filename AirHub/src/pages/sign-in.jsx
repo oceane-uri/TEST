@@ -44,7 +44,7 @@ export function SignIn() {
         // Redirection vers la page de profil
       navigate('/profile');
       } else {
-        // Affichage d'un message d'erreur si les informations de connexion sont incorrectes
+        
         setError('Email ou mot de passe incorrect');
       }
     } catch (error) {

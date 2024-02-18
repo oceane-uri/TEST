@@ -1,7 +1,10 @@
-// routes/auth.js
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
+const {
+    googleClientID,
+    googleClientSecret
+} = require('../config');
 
 // Route pour démarrer le processus d'authentification avec Google
 router.get('/google', passport.authenticate('google', {
@@ -14,6 +17,17 @@ router.get('/google/callback', passport.authenticate('google', {
 }), (req, res) => {
     // Rediriger vers la page de succès de connexion
     res.redirect('/success');
+});
+
+// Route pour gérer la demande POST depuis le frontend pour l'authentification avec Google
+router.post('/google', (req, res) => {
+    // Récupérer le tokenId envoyé depuis le frontend
+    const tokenId = req.body.tokenId;
+
+
+    res.status(200).json({
+        message: 'Authentification avec Google réussie'
+    });
 });
 
 // Route pour déconnecter l'utilisateur

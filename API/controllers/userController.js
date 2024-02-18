@@ -2,7 +2,7 @@
 const passport = require('passport');
 const User = require('../models/user');
 
-// Créer un nouvel utilisateur
+//nouvel utilisateur
 exports.createUser = async (req, res) => {
     try {
         const newUser = new User(req.body);

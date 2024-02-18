@@ -1,4 +1,3 @@
-// authMiddleware.js
 
 const authMiddleware = (req, res, next) => {
     const authToken = req.headers.authorization;

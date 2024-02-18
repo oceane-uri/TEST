@@ -28,11 +28,10 @@ const Details = ({ userId }) => {
       <h2>Informations Utilisateur</h2>
       <p>Nom: {user.firstName}</p>
       <p>Email: {user.email}</p>
-      {/* Afficher d'autres informations de l'utilisateur ici */}
       <h2>Réservations de l'utilisateur</h2>
       <ul>
         {reservations.map((reservation) => (
-          <li key={reservation._id}>{/* Afficher ici les détails de chaque réservation */}</li>
+          <li key={reservation._id}>{/* Affichage des détails de chaque réservation */}</li>
         ))}
       </ul>
     </div>

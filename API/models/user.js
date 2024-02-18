@@ -1,4 +1,3 @@
-// models/user.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
@@ -20,7 +19,7 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// Hasher le mot de passe avant de sauvegarder l'utilisateur
+// Hashage du mot de passe avant de sauvegarder l'utilisateur
 userSchema.pre('save', async function (next) {
     const user = this;
     if (!user.isModified('password')) return next();
@@ -31,7 +30,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-// Méthode pour vérifier si le mot de passe fourni correspond au mot de passe haché dans la base de données
+// Méthode pour vérifier si le mot de passe fourni correspond au mot de passe haché dans ma base de données
 userSchema.methods.comparePassword = async function (candidatePassword) {
     return bcrypt.compare(candidatePassword, this.password);
 };
