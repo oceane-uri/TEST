@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { Avatar, Typography, Button } from "@material-tailwind/react";
+import { Card, Avatar, Typography, Button } from "@material-tailwind/react";
 import {
   MapPinIcon,
   BriefcaseIcon,
@@ -102,54 +102,33 @@ export function Profile() {
               </div>
             </div>
             <div className="mb-10 py-6">
-          <div className="flex w-full flex-col items-start lg:w-1/2">
-            {/* Affichage des réservations de l'utilisateur */}
-            <h2 className="text-xl font-semibold mb-4">Mes Réservations</h2>
-            <ul>
+        <div className="mb-10 py-6">
+            <div className="flex flex-wrap -mx-4">
               {reservations.map((reservation) => (
-                <li key={reservation._id}>
-                  <div>Date: {reservation.date}</div>
-                  <div>Service: {reservation.serviceType}</div>
-                  <div>Statut: {reservation.status}</div>
-                </li>
+                <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8" key={reservation._id}>
+                  <Card color="transparent" shadow={false} className="text-center border border-gray-200 rounded-lg p-4">
+                    <Typography variant="h5" color="blue-gray" className="mt-6 mb-1">
+                      {reservation.serviceType}
+                    </Typography>
+                    <Typography className="font-bold text-blue-gray-500">
+                      Date: {reservation.date}
+                    </Typography>
+                    <Typography className="font-bold text-blue-gray-500">
+                      Statut: {reservation.status}
+                    </Typography>
+                    <Button
+                      className="bg-gray-800 hover:bg-gray-600 mt-4"
+                      onClick={() => handleUpdateReservationClick(reservation._id)}
+                    >
+                      Modifier
+                    </Button>
+                  </Card>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
-            <div className="-mt-4 container space-y-2">
-              <div className="flex items-center gap-2">
-                <MapPinIcon className="-mt-px h-4 w-4 text-blue-gray-500" />
-                <Typography className="font-medium text-blue-gray-500">
-                  Los Angeles, California
-                </Typography>
-              </div>
-              <div className="flex items-center gap-2">
-                <BriefcaseIcon className="-mt-px h-4 w-4 text-blue-gray-500" />
-                <Typography className="font-medium text-blue-gray-500">
-                  Solution Manager - Creative Tim Officer
-                </Typography>
-              </div>
-              <div className="flex items-center gap-2">
-                <BuildingLibraryIcon className="-mt-px h-4 w-4 text-blue-gray-500" />
-                <Typography className="font-medium text-blue-gray-500">
-                  University of Computer Science
-                </Typography>
-              </div>
-            </div>
-            <div className="mb-10 py-6">
-              <div className="flex w-full flex-col items-start lg:w-1/2">
-                <Typography className="mb-6 font-normal text-blue-gray-500">
-                  An artist of considerable range, Jenna the name taken by
-                  Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                  performs and records all of his own music, giving it a
-                  warm, intimate feel with a solid groove structure. An
-                  artist of considerable range.
-                </Typography>
-                <Button variant="text">Show more</Button>
-              </div>
-            </div>
           </div>
-
 
         </div>
       </section>

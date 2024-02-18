@@ -51,7 +51,7 @@ export function Home() {
               />
             ))}
           </div>
-          <div className="mt-32 flex flex-wrap items-center">
+          {/* <div className="mt-32 flex flex-wrap items-center">
             <div className="mx-auto -mt-8 w-full px-4 md:w-5/12">
               <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-gray-900 p-2 text-center shadow-lg">
                 <FingerPrintIcon className="h-8 w-8 text-white " />
@@ -101,7 +101,7 @@ export function Home() {
                 </CardBody>
               </Card>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
       <section className="px-4 pt-20 pb-48">
@@ -132,7 +132,7 @@ export function Home() {
           </div>
         </div>
       </section>
-      <section className="relative bg-white py-24 px-4">
+      {/* <section className="relative bg-white py-24 px-4">
         <div className="container mx-auto">
           <PageTitle section="Co-Working" heading="Build something">
             Put the potentially record low maximum sea ice extent tihs year down
@@ -193,7 +193,7 @@ export function Home() {
             </Button>
           </form>
         </div>
-      </section>
+      </section> */}
       <div className="bg-white">
         <Footer />
       </div>
